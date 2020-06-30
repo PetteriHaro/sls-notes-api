@@ -1,0 +1,14 @@
+{
+  "name": "sls-notes-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/PetteriHaro/sls-notes-api.git",
+  "author": "Petteri Haro <petteri@workant.io>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "offline": "yarn workspaces run offline",
+    "deploy": "yarn workspaces run deploy"
+  },
+  "workspaces": ["./src/services/notes", "./src/services/users"]
+}

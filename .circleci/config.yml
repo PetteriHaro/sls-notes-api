@@ -34,15 +34,11 @@ jobs:
             echo "export ENVIRONMENT=Development" >> $BASH_ENV
 
       - run:
-          name: Deploy Notes Service
+          name: Install Deps
           command: |
-            cd src/services/notes
             yarn install
-            sls deploy --stage v1
 
       - run:
-          name: Deploy Auth Service
+          name: Deploy Services
           command: |
-            cd src/services/users
-            yarn install
-            sls deploy --stage v1
+            yarn workspaces run deploy

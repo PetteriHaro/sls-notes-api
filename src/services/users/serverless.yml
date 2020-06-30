@@ -2,38 +2,33 @@ service:
   name: sls-notes-api
 
 custom:
-  customDomain:
-    domainName: '${env:API_NAME}.maigoapp.com'
-    basePath: 'users'
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: trues
-    packager: 'yarn'
+  typeScript:
+    tsconfigFilePath: ../../../tsconfig.json
+  serverless-offline:
+    prefix: users
 
-# Add the serverless-webpack plugin
 plugins:
-  - serverless-webpack
+  - '@kingdarboja/serverless-plugin-typescript'
   - serverless-dotenv-plugin
   - serverless-offline
 
 provider:
   name: aws
   runtime: nodejs12.x
-  region: eu-east-1
-  apiName: Sls Notes Api
+  region: eu-north-1
+  apiName: SLS Notes Api
   description: Users Microservice for a Serverless Demo
   memorySize: 128
   timeout: 5
   endpointType: regional
   environment:
     ENVIRONMENT: ${env:ENVIRONMENT}
-
-functions:
-  login:
-    handler: login.handler
-    events:
-      - http:
-          path: /
-          method: post
-          cors:
-            origin: '*'
+# functions:
+#   login:
+#     handler: login.handler
+#     events:
+#       - http:
+#           path: /
+#           method: post
+#           cors:
+#             origin: '*'

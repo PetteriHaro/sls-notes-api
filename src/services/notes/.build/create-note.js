@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,15 +35,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-module.exports.hello = function (event) { return __awaiter(void 0, void 0, void 0, function () {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.handler = void 0;
+var joi_1 = __importDefault(require("@hapi/joi"));
+var validationSchema = joi_1.default.object({
+    email: joi_1.default.string()
+        .email({ minDomainSegments: 2, tlds: { allow: ['fi'] } })
+        .regex(/3as.fi/)
+        .required(),
+    password: joi_1.default.string().required(),
+    role: joi_1.default.string().valid('admin', 'contributor', 'super-admin').required(),
+});
+exports.handler = function (event, context) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        return [2 /*return*/, {
-                statusCode: 200,
-                body: JSON.stringify({
-                    message: 'Go Serverless v1.0! Your function executed successfully!',
-                    input: event,
-                }, null, 2),
-            }];
+        try {
+            return [2 /*return*/, {
+                    statusCode: 200,
+                    headers: {},
+                    body: JSON.stringify('MOI'),
+                }];
+        }
+        catch (_b) {
+            return [2 /*return*/, {
+                    statusCode: 401,
+                    headers: {},
+                    body: JSON.stringify('ERRPR'),
+                }];
+        }
+        return [2 /*return*/];
     });
 }); };
-//# sourceMappingURL=handler.js.map
+//# sourceMappingURL=create-note.js.map
