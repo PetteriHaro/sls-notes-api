@@ -1,5 +1,5 @@
 service:
-  name: sls-notes-api
+  name: sls-notes-api-users
 
 custom:
   typeScript:
@@ -22,13 +22,16 @@ provider:
   timeout: 5
   endpointType: regional
   environment:
-    ENVIRONMENT: ${env:ENVIRONMENT}
-# functions:
-#   login:
-#     handler: login.handler
-#     events:
-#       - http:
-#           path: /
-#           method: post
-#           cors:
-#             origin: '*'
+    NOTES_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+
+resources:
+  Resources: ${file(../../utils/notesTable.yml)}
+functions:
+  login:
+    handler: login.handler
+    events:
+      - http:
+          path: /
+          method: post
+          cors:
+            origin: '*'

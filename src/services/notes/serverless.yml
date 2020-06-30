@@ -23,6 +23,7 @@ provider:
   endpointType: regional
   environment:
     NOTES_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+
 resources:
   Resources: ${file(../../utils/notesTable.yml)}
 
