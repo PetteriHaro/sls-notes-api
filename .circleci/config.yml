@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:12.14.1
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Install Serverless CLI and dependencies
+          command: |
+            sudo yarn global add serverless@1.74.1
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-
+
+      - run:
+          name: Add Correct Environment Variables
+          command: |
+            echo "export API_NAME=devapi" >> $BASH_ENV
+            echo "export SERVICE_ENVIRONMENT=dev" >> $BASH_ENV
+            echo "export ENVIRONMENT=Development" >> $BASH_ENV
+
+      - run:
+          name: Deploy Notes Service
+          command: |
+            cd src/services/notes
+            yarn install
+            sls deploy --stage v1
+
+      - run:
+          name: Deploy Auth Service
+          command: |
+            cd src/services/users
+            yarn install
+            sls deploy --stage v1

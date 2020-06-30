@@ -1,0 +1,13 @@
+{
+  "eslint.enable": true,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "proseWrap": "never",
+  "overrides": [
+    {
+      "files": ["*.json"],
+      "options": { "parser": "json", "singleQuote": false }
+    }
+  ]
+}
