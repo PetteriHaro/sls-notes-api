@@ -8,7 +8,9 @@
   "private": true,
   "scripts": {
     "offline": "yarn workspaces run offline",
-    "deploy": "yarn workspaces run deploy"
+    "deploy": "yarn workspaces run deploy",
+    "tsc": "yarn workspaces run tsc",
+    "lint": "yarn workspaces run lint"
   },
   "workspaces": ["./src/services/notes", "./src/services/users"]
 }
