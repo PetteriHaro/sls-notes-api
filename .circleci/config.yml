@@ -41,6 +41,4 @@ jobs:
       - run:
           name: Deploy Services
           command: |
-            cd src/services/notes
-            yarn install
-            yarn run deploy
+            yarn workspaces run deploy
