@@ -42,4 +42,5 @@ jobs:
           name: Deploy Services
           command: |
             cd src/services/notes
+            yarn install
             yarn run deploy
