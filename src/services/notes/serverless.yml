@@ -1,0 +1,60 @@
+service:
+  name: sls-notes-api
+
+custom:
+  customDomain:
+    domainName: '${env:API_NAME}.maigoapp.com'
+    basePath: 'notes'
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: trues
+    packager: 'yarn'
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-east-1
+  apiName: Sls Notes Api
+  description: Notes Microservice for a Serverless Demo
+  memorySize: 128
+  timeout: 15
+  endpointType: regional
+  environment:
+    ENVIRONMENT: ${env:ENVIRONMENT}
+
+functions:
+  create-admin:
+    handler: create-note.handler
+    events:
+      - http:
+          path: /
+          method: post
+          cors:
+            origin: '*'
+          request:
+            schema:
+              application/json: ${file(validation-models/create-admin.json)}
+
+  get-admins:
+    handler: get-notes.handler
+    events:
+      - http:
+          path: /
+          method: get
+          cors:
+            origin: '*'
+
+  get-admin:
+    handler: get-note.handler
+    events:
+      - http:
+          path: /{noteId}
+          method: post
+          cors:
+            origin: '*'
