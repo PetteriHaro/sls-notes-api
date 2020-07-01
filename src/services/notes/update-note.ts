@@ -1,7 +1,12 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 import AWS from 'aws-sdk';
-import R from 'ramda';
-import { getResponseHeaders } from '../../utils/headers';
+import moment from 'moment';
+
+import {
+  getResponseHeaders,
+  getUserName,
+  getUserId,
+} from '../../utils/headers';
 
 AWS.config.update({ region: 'eu-north-1' });
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -9,32 +14,30 @@ const tableName = process.env.NOTES_TABLE;
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   try {
-    const note_id = decodeURIComponent(event.pathParameters?.noteId || '');
-    console.log(note_id);
-    const data = await dynamodb
-      .query({
+    let item = event.body ? JSON.parse(event.body).Item : undefined;
+
+    item.user_id = getUserId(event.headers);
+    item.username = getUserName(event.headers);
+    item.exprires = moment().add(6, 'months').unix();
+
+    await dynamodb
+      .put({
         TableName: tableName,
-        IndexName: 'note_id-index',
-        KeyConditionExpression: 'note_id = :note_id',
-        ExpressionAttributeValues: {
-          ':note_id': note_id,
+        Item: item,
+        ConditionExpression: '#t = :t',
+        ExpressionAttributeNames: {
+          '#t': 'timestamp',
         },
-        Limit: 1,
+        ExpressionAttributeValues: {
+          ':t': item.timestamp,
+        },
       })
       .promise();
-
-    if (R.isEmpty(data.Items) || data.Items?.length > 1) {
-      throw {
-        statusCode: 404,
-        name: 'Item not found!',
-        message: 'We did not find that item from database',
-      };
-    }
 
     return {
       statusCode: 200,
       headers: getResponseHeaders(),
-      body: JSON.stringify(data.Items[0]),
+      body: JSON.stringify(item),
     };
   } catch (err) {
     return {

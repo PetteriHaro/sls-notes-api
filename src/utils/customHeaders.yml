@@ -1,0 +1,10 @@
+- Accept
+- Content-Type
+- Content-Length
+- Authorization
+- X-Amz-Date
+- X-Amz-Key
+- X-Amz-Security-Token
+- X-Amz-User-Agent
+- AppUserId
+- AppUserName

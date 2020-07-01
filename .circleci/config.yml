@@ -39,6 +39,15 @@ jobs:
             yarn install
 
       - run:
-          name: Deploy Services
+          name: Deploy Notes
           command: |
-            yarn run deploy
+            cd src/services/notes
+            yarn
+            sls deploy --stage v1
+
+      - run:
+          name: Deploy Users
+          command: |
+            cd src/services/users
+            yarn
+            sls deploy --stage v1

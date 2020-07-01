@@ -7,10 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "offline": "yarn workspaces run offline",
-    "deploy": "yarn workspaces run deploy",
-    "tsc": "yarn workspaces run tsc",
-    "lint": "yarn workspaces run lint"
-  },
-  "workspaces": ["./src/services/notes", "./src/services/users"]
+    "offline": "cd src/services/$SERVICE && yarn && sls offline",
+    "deploy": "cd src/services/$SERVICE && yarn && sls deploy"
+  }
 }
