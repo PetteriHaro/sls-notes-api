@@ -2,13 +2,11 @@ service:
   name: sls-notes-api
 
 custom:
-  typeScript:
-    tsconfigFilePath: ../../../tsconfig.json
   serverless-offline:
     prefix: notes
 
 plugins:
-  - '@kingdarboja/serverless-plugin-typescript'
+  - serverless-webpack
   - serverless-dotenv-plugin
   - serverless-offline
 
@@ -22,12 +20,26 @@ provider:
   timeout: 5
   endpointType: regional
   environment:
-    NOTES_TABLE: ${self:service}-${opt:stage, self:provider.stage}
-
-resources:
-  Resources: ${file(../../utils/notesTable.yml)}
+    NOTES_TABLE: ${self:service}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:PutItem
+        - dynamodb:DeleteItem
+      Resource: 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.NOTES_TABLE}'
 
 functions:
+  get-notes:
+    handler: get-notes.handler
+    events:
+      - http:
+          path: /
+          method: get
+          cors:
+            origin: '*'
+            headers: ${file(../../utils/customHeaders.yml)}
+
   create-note:
     handler: create-note.handler
     events:
@@ -36,19 +48,34 @@ functions:
           method: post
           cors:
             origin: '*'
-  # get-admins:
-  #   handler: get-notes.handler
-  #   events:
-  #     - http:
-  #         path: /
-  #         method: get
-  #         cors:
-  #           origin: '*'
-  # get-admin:
-  #   handler: get-note.handler
-  #   events:
-  #     - http:
-  #         path: /{noteId}
-  #         method: post
-  #         cors:
-  #           origin: '*'
+            headers: ${file(../../utils/customHeaders.yml)}
+
+  update-note:
+    handler: update-note.handler
+    events:
+      - http:
+          path: /
+          method: put
+          cors:
+            origin: '*'
+            headers: ${file(../../utils/customHeaders.yml)}
+
+  get-note:
+    handler: get-note.handler
+    events:
+      - http:
+          path: /notes/{noteId}
+          method: get
+          cors:
+            origin: '*'
+            headers: ${file(../../utils/customHeaders.yml)}
+
+  delete-note:
+    handler: get-note.handler
+    events:
+      - http:
+          path: /{timestamp}
+          method: post
+          cors:
+            origin: '*'
+            headers: ${file(../../utils/customHeaders.yml)}

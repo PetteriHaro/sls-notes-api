@@ -1,31 +1,52 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
-import 'source-map-support/register';
+import AWS from 'aws-sdk';
 
-import { createError } from '../../utils/errors';
-import { corsHeaders, connectToDataBase } from '../../utils/db';
-import { checkAuthentication } from '../../utils/auth';
-import Admin from '../../models/Admin';
+import { getResponseHeaders, getUserId } from '../../utils/headers';
 
-const url = process.env.MONGO_URL;
+AWS.config.update({ region: 'eu-north-1' });
+const dynamodb = new AWS.DynamoDB.DocumentClient();
+const tableName = process.env.NOTES_TABLE;
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+export const handler: APIGatewayProxyHandler = async (event) => {
   try {
-    await connectToDataBase(url);
+    const query = event.queryStringParameters;
+    const limit = parseInt(query?.limit || '5');
+    const user_id = getUserId(event.headers);
 
-    const data = await checkAuthentication(event.headers, 'super-admin', true);
+    const params: AWS.DynamoDB.DocumentClient.QueryInput = {
+      TableName: tableName,
+      KeyConditionExpression: 'user_id = :uid',
+      ExpressionAttributeValues: {
+        ':uid': user_id,
+      },
+      Limit: limit,
+      ScanIndexForward: false,
+    };
 
-    const admins = await Admin.find();
+    const startTimeStamp = parseInt(query?.start || '0');
+
+    if (startTimeStamp > 0) {
+      params.ExclusiveStartKey = {
+        user_id: user_id,
+        timestamp: startTimeStamp,
+      };
+    }
+
+    const data = await dynamodb.query(params).promise();
 
     return {
       statusCode: 200,
-      headers: corsHeaders,
+      headers: getResponseHeaders(),
+      body: JSON.stringify(data),
+    };
+  } catch (err) {
+    return {
+      statusCode: err.statusCode || 500,
+      headers: getResponseHeaders(),
       body: JSON.stringify({
-        message: 'Admins gotten!',
-        admins: admins.filter(admin => admin._id.toString() !== data._id),
+        error: err.name || 'Server Error',
+        message: err.message || 'Unkown error',
       }),
     };
-  } catch (e) {
-    return createError({ e });
   }
 };
