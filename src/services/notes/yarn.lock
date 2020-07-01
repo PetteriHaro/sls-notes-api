@@ -758,9 +758,9 @@ atob@^2.1.2:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 aws-sdk@^2.708.0:
-  version "2.708.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.708.0.tgz#6d4345c6d7a06f3d076ce9f0c54958563b2a721e"
-  integrity sha512-5xXOvbgBXUUKBaJlJUcJIFc2EVMa4Z4f7ILbKIpApoFonW1kHiwBLMBi0MarY4aco7RaodgbqhaOBar4kmSHKw==
+  version "2.709.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.709.0.tgz#33b0c0fe8b9420c65610545394be047ac2d93c8f"
+  integrity sha512-F3sKXsCiutj9RglVXdqb/XJ3Ko3G+pX081Nf1YjVJpLydwE2v16FGxrLqE5pqyWMDeUf5nZHnBoMuOYD8ip+Kw==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -1884,7 +1884,7 @@ event-emitter@^0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-eventemitter3@^4.0.0:
+eventemitter3@^4.0.4:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.4.tgz#b5463ace635a083d018bdc7c917b4c5f10a85384"
   integrity sha512-rlaVLnVxtxvoyLsQQFBx53YmXHDxRIzzTLbdfxqi4yocpSjAxXwkU0cScM5JgSKMqEhrZpnvQ2D9gjylR0AimQ==
@@ -3486,11 +3486,11 @@ p-memoize@^4.0.0:
     mimic-fn "^3.0.0"
 
 p-queue@^6.3.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-6.4.0.tgz#5050b379393ea1814d6f9613a654f687d92c0466"
-  integrity sha512-X7ddxxiQ+bLR/CUt3/BVKrGcJDNxBr0pEEFKHHB6vTPWNUhgDv36GpIH18RmGM3YGPpBT+JWGjDDqsVGuF0ERw==
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-6.5.0.tgz#40d6bafdd3bb0c8eaa03e0649ba6fa3ce7249947"
+  integrity sha512-FLaTTD9Am6TeDfNuN0d+INeyVJoICoBS+OVP5K1S84v4w51LN3nRkCT+WC7xLBepV2s+N4LibM7Ys7xcSc0+1A==
   dependencies:
-    eventemitter3 "^4.0.0"
+    eventemitter3 "^4.0.4"
     p-timeout "^3.1.0"
 
 p-retry@^4.2.0:
@@ -4656,9 +4656,9 @@ typedarray@^0.0.6:
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
 typescript@^3.9.5:
-  version "3.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
-  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+  version "3.9.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz#8f3e0198a34c3ae17091b35571d3afd31999365a"
+  integrity sha512-Pspx3oKAPJtjNwE92YS05HQoY7z2SFyOpHo9MqJor3BXAGNaPUs83CuVp9VISFkSjyRfiTpmKuAYGJB7S7hOxw==
 
 union-value@^1.0.0:
   version "1.0.1"

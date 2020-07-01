@@ -42,12 +42,11 @@ jobs:
           name: Deploy Notes
           command: |
             cd src/services/notes
-            yarn
+            yarn install
             sls deploy --stage v1
-
-      - run:
-          name: Deploy Users
-          command: |
-            cd src/services/users
-            yarn
-            sls deploy --stage v1
+      # - run:
+      #     name: Deploy Users
+      #     command: |
+      #       cd src/services/users
+      #       yarn install
+      #       sls deploy --stage v1

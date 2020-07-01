@@ -12,6 +12,7 @@ plugins:
 
 provider:
   name: aws
+  stage: v1
   runtime: nodejs12.x
   region: eu-north-1
   apiName: SLS Notes Api
