@@ -39,6 +39,11 @@ jobs:
             yarn install
 
       - run:
-          name: Deploy Services
+          name: Deploy Notes
           command: |
-            yarn run deploy
+            $SERVICE=notes yarn run deploy
+
+      - run:
+          name: Deploy Users
+          command: |
+            $SERVICE=users yarn run deploy
